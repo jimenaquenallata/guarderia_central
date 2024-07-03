@@ -1,0 +1,222 @@
+@startuml
+skinparam classAttributeIconSize 0
+abstract class Persona<<serializable>>
+class "Administrador"
+class "Socio"
+class "Empleado"
+class "Main"
+class "Vehiculo"
+class "Zona"
+class "Garage"
+Class "App"
+Class "SistemaDeRegistro"
+
+Persona <|---Socio
+Persona <|---Empleado
+Persona <|-Administrador
+Zona --* Garage
+Socio -* Vehiculo
+Socio o-Vehiculo
+Empleado*--Zona
+Socio <.. Garage
+Zona <.Vehiculo
+Vehiculo<..Garage
+SistemaDeRegistro..>Persona
+SistemaDeRegistro..>Zona
+SistemaDeRegistro..>Vehiculo
+SistemaDeRegistro..>Socio
+
+
+class EntradaSalida{
+ 
++{static}scaneo():String 
++{static}scaneoE():int 
++{static}leerChar(String):char 
++{static}leerString(String):String 
++{static}leerInt(String):int 
++{static}leerBoolean(String):boolean 
++{static}mostrarString(String):void 
+}
+abstract class Persona<<serializable>>{
+-usuario:String 
+-password:String 
++getPassword():String 
++setPassword(String):void 
++getUsuario():String 
++setUsuario(String):void
++{abstract}proceder(SistemaDeRegistro):boolean 
++{abstract}mostrar():void 
+}
+class Administrador<<serializable>>{
++Administrador(String,String)
++mostrar():void
++proceder():boolean
++altaZona(SistemaDeRegistro):void
++altaEmpleado(SistemaDeRegistro):void
++altaSocio(SistemaDeRegistro):void
++registrarVehiculo(SistemaDeRegistro):void
++ventaGarage(SistemaDeRegistro):void
++mostrarBD(SistemaDeRegistro):void
+
+}
+
+class Socio<<serializable>>{
+-nombre:String
+-direccion:String 
+-telefono:String 
+-dni:String 
+-fecha_ingreso:LocalDate 
+-vehiculos:ArrayList<Vehiculo> 
+-garages:ArrayList<Garage> 
++Socio(String, String, LocalDate)
++agregarVehiculos(Vehiculo):void 
++agregarGarages(Garage):void 
++getFecha():LocalDate 
++setFecha(LocalDate):void 
++getName():String 
++setName(String):void 
++getDNI():String 
++setDNI(String):void 
++getDireccion():String 
++setDireccion(String):void 
++getTelefono():String 
++setTelefono(String):void 
++getVehiculos():<Vehiculo>
++getGarages():ArrayList<Garage>
++mostrar():void
++proceder():boolean
+}
+
+class Empleado<<serializable>>{
+-codigo:String 
+-nombre:String 
+-especialidad:String 
+-direccion:String 
+-telefono:String 
+-zonasAsignadas:ArrayList<Zona> 
++Empleado(String, String , ArrayList<Zona>)
++asignarZona(Zona):void 
++getCodigo():String 
++setCodigo(String):void 
++getName():String 
++setName(String):void 
++getEspecialidad():String 
++setEspecialidad(String):void 
++getDireccion():String 
++setDireccion(String):void 
++getTelefono():String 
++setTelefono(String):void 
++getZona():ArrayList<Zona> 
++setZonas(ArrayList<Zona>):void 
++mostrar():void
++proceder():boolean
+}
+
+class Vehiculo<<serializable>>{
+
+-nombre:String 
+-matricula:String 
+-tipo:String 
+-dimensiones:String 
+-propietario:Socio 
+-garageAsignado:Garage 
+-zona:Zona
++Vehiculo(Socio)
++getNombre():String 
++setZona(Zona):void
++getZona():Zona 
++setNombre(String x):void 
++getMatricula():String 
++setMatricula(String):void 
++getTipo(:String 
++setTipo(String x):void 
++getDimensiones():String 
++setDimensiones(String x):void 
++mostrar():void
+}
+
+class Zona<<serializable>>{
+-letra:char 
+-tipoVehiculo:String 
+-cantVehiculos:int 
+-cantGarages:int
+-ancho:String 
+-profundidad:String
+-garages:ArrayList<Garage> 
+-empleadosZona:ArrayList<Empleado>
++Zona()
++getGarages():ArrayList<Garage> 
++getEmpleadosZona():ArrayList<Empleado> 
++agregarGarage(Garage g):void 
++garagesOcupados():int 
++agregarEmpleado(Empleado e):void 
++getAncho():String 
++setAncho(String x):void 
++getCantVehiculos():int 
++setCantGarages(int x):void  
++getCantGarages():int 
++getProfundidad():String 
++setProfundidad(String):void 
++getLetra():char 
++setLetra(char):void 
++getTipoVehiculo():String 
++setTipoVehiculo(String):void 
++mostrar():void 
+}
+
+class Garage<<serializable>>{
+
+-nro:int 
+-cont_luz:int 
+-serv_mant:boolean 
+-fecha_compra:LocalDate 
+-fecha_asignacion:LocalDate 
+-v:Vehiculo
+-prop:Socio
+-zona:Zona
++Garage(Zona)
++getZona():Zona
++getVehiculo():Vehiculo
++setVehiculo(Vehiculo):void
++getProp():Socio 
++setProp(Socio x):void 
++getNro():int 
++setNro(int):void 
++getCont_luz():int 
++setcont_luz(int):void 
++getServMant():boolean 
++setServMant(boolean):void 
++getFechaCompra():LocalDate 
++setFechaCompra(LocalDate):void 
++getFechaAsignacion():LocalDate 
++setFechaAsignacion(LocalDate):void 
++mostrar():void
+}
+
+Class SistemaDeRegistro<<serializable>>{
+-zonas:ArrayList<Zona>
+-personas:ArrayList<Persona>
+-vehiculos:ArrayList<Vehiculo>
+-listSoc:ArrayList<Socio> 
++SistemaDeRegistro()
++agregarSocio(Socio):void
++getListaSocios():ArrayList<Socio>
++pantallaRegistro():void 
++getZonas():ArrayList<Zona> 
++setZonas(ArrayList<Zona>):void 
++getVehiculos():ArrayList<Vehiculo> 
++setVehiculos(ArrayList<Vehiculo>):void 
++getPersonas():ArrayList<Persona> 
++setPersonas(ArrayList<Persona>):void 
++serializar(String):void 
++deSerializar(String):SistemaDeRegistro 
++buscarPersona(String):Persona 
+
+}
+Class App{
++ejecutar():void
+}
+class Main{
++{static}main(String[]):void
+}
+@enduml

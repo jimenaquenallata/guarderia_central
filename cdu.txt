@@ -1,0 +1,33 @@
+@startuml
+actor "Persona"
+actor Socio
+actor Empleado
+actor Administrador
+usecase iniciar_sesion
+usecase salir_programa
+usecase Alta_zona
+usecase Alta_Empleado
+usecase Alta_Socio
+usecase Registrar_Vehiculo
+usecase Venta_Garage
+usecase MostrarBD
+Usecase consultar
+Persona<|--- Socio
+Persona<|--- Empleado
+Persona<|---- Administrador
+
+
+Socio-->iniciar_sesion
+Empleado-->iniciar_sesion
+Socio-->consultar
+Empleado-->consultar
+Administrador--->iniciar_sesion
+Administrador--->salir_programa
+Administrador--->Alta_zona
+Administrador--->Alta_Empleado
+Administrador--->Alta_Socio
+Administrador--->Registrar_Vehiculo
+Administrador--->Venta_Garage
+Administrador--->MostrarBD
+
+@enduml
